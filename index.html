@@ -624,6 +624,62 @@
       opacity: 1;
       text-decoration: underline;
     }
+
+    /* NEWS VISUALIZATION*/
+ .news-thread { max-width: 900px; margin:0 auto; }
+  .news-viewport {
+    overflow: hidden;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    position: relative;
+    background: #fff;
+  }
+
+  /* The track will be translated vertically by JS */
+  .news-track {
+    display: flex;
+    flex-direction: column;
+    transition: transform 600ms cubic-bezier(.2,.9,.3,1);
+    will-change: transform;
+  }
+
+  .announce {
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    padding: var(--announce-padding);
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    min-height: 150px; /* visual height for one announcement */
+  }
+
+  .announce img {
+    width:92px; height:92px; object-fit:cover; border-radius:6px; background:#f4f4f4; flex-shrink:0;
+  }
+
+  .meta { flex:1; }
+  .headline { font-weight:700; margin:0 0 6px; font-size:1.02rem; }
+  .date { color:#666; font-size:0.9rem; margin-bottom:8px; }
+  .summary { margin:0 0 8px; line-height:1.4; color:#222; }
+  .source { font-size:0.88rem; color:#0b63c6; text-decoration:none; }
+
+  /* Layout: show 3 announcements at a time on screens >=640px, otherwise 1 */
+  @media (min-width: 640px){
+    .news-viewport { height: calc((200px + var(--announce-padding) * 2 + 1px) * 3 + var(--announce-gap)); } 
+    /* Note: We use JS to compute exact heights for precise movement; this CSS height is fallback */
+  }
+  @media (max-width: 639px){
+    .news-viewport { height: calc((200px + var(--announce-padding) * 2 + 1px) * 1 + var(--announce-gap)); }
+  }
+
+  /* Pause visual indicator */
+  .controls { margin-top:10px; display:flex; gap:8px; align-items:center; font-size:0.9rem; color:#555;}
+  .btn { background:#f1f1f1; border:1px solid #ddd; padding:6px 8px; border-radius:6px; cursor:pointer; }
+  .btn:focus { outline:2px solid #7fb4ff; }
+
+
+    
   </style>
 </head>
 <body>
@@ -661,6 +717,8 @@
     </header>
 
     <main>
+
+      
       <!-- HERO / HOMEPAGE BLURB -->
       <section class="section hero" id="top">
         <div>
@@ -697,6 +755,152 @@
           </div>
         </div>
 
+<!-----ANNOUNCEMENTS-------->
+      <section id="emitlab-announcements" class="news-thread" aria-label="EmitLab — announcements">
+
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">News</div>
+            <h2 class="section-title">Announcements </h2>
+          </div>
+        </div>
+	
+  <!-- viewport  -->
+  <div class="news-viewport" id="newsViewport" tabindex="0" aria-live="polite" aria-atomic="true">
+    <div class="news-track" id="newsTrack">
+      <!-- Announcement items -->
+
+        <article class="announce" role="article" aria-labelledby="a1">
+        <img src="
+./emitlab2.jpg
+" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">Javier Redondo Anton defends his PhD thesis
+	   </h3>
+          <div class="date">October 2025</div>
+          <p class="summary">
+	   Thesis title: "Complicacy Guided Parameter Space Sampling for Simulation Ensemble Generation in Dynamic
+Contexts, and for Knowledge Discovery with Limited Simulation Budgets
+"
+	  </p>
+        </div>
+      </article>
+
+
+      
+        <article class="announce" role="article" aria-labelledby="a1">
+        <img src="
+./emitlab2.jpg
+" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">Abhinav Gorantla defends his MS thesis
+	   </h3>
+          <div class="date">October 2025</div>
+          <p class="summary">
+	   Thesis title: "Speeding-up of the Non-Dominated Sorting Genetic Algorithm-II by Selective De-Correlation"
+	  </p>
+        </div>
+      </article>
+
+
+        <article class="announce" role="article" aria-labelledby="a1">
+        <img src="
+./emitlab2.jpg
+" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">Fahim Tasneema Azad defends her PhD thesis proposal
+	   </h3>
+          <div class="date">October 2025</div>
+          <p class="summary">
+	   Thesis title: "Forecasting in Dynamic Complex Systems:
+Scarcity, Context, and Causality"
+	  </p>
+        </div>
+      </article>
+
+      
+      <article class="announce" role="article" aria-labelledby="a1">
+        <img src="
+https://news.asu.edu/sites/g/files/litvpz161/files/styles/block_image_16_9_lge/public/2025-10/20210604%20Old%20Main%20075.jpg?itok=Jqe73m0w
+" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">4 ASU faculty, including Candan, earn prestigious President's Professor designation
+	   </h3>
+          <div class="date">October 2025</div>
+          <p class="summary">
+	    ASU research innovations can help public health officials make faster, more informed decisions during disease outbreaks.Recognized for their innovation in teaching and scholarly work, their fields are anthropology, complex data, geology and regenerative medicine
+	  </p>
+          <a class="source" href=
+	     "
+https://news.asu.edu/20251022-university-news-4-asu-faculty-earn-prestigious-presidents-professor-designation
+" tabindex="-1">ASU News</a>
+        </div>
+      </article>
+
+      
+      <article class="announce" role="article" aria-labelledby="a1">
+        <img src="https://news.asu.edu/sites/g/files/litvpz161/files/styles/block_image_16_9_lge/public/2025-07/SCAI-Kasim-Selcuk-Candan-2025-EG-6806-a_1920x1080.jpg?itok=s2s_KSdf" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">New AI tools power smarter epidemic models and safer futures
+	   </h3>
+          <div class="date">June 2025</div>
+          <p class="summary">ASU research innovations can help public health officials make faster, more informed decisions during disease outbreaks.</p>
+          <a class="source" href="https://news.asu.edu/20250729-science-and-technology-new-ai-tools-power-smarter-epidemic-models-and-safer-futures" tabindex="-1">ASU News</a>
+        </div>
+      </article>
+
+      <article class="announce" role="article" aria-labelledby="a1">
+        <img src="
+https://news.engineering.asu.edu/wp-content/uploads/2023/11/FahimTasneemaAzad-400x600-1.jpg
+" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">Tasneema receives a 2023 Impact Award</h3>
+          <div class="date">Fall 2023</div>
+          <p class="summary">
+	   Fahim Tasneema Azad's  research projects are centered around conducting time series analysis and forecasting. She is the president of Upsilon Pi Epsilon at ASU and is the vice president of external affairs of Women in Computer Science, for which she also served as the programming competition director. She also volunteered with the Society of Women Engineers and Women in Machine Learning.
+	  </p>
+          <a class="source" href="
+https://news.engineering.asu.edu/graduate/fahim-tasneema-azad/
+" tabindex="-1">ASU News</a>
+        </div>
+      </article>
+
+      
+      <article class="announce" role="article" aria-labelledby="a1">
+        <img src="https://news.asu.edu/sites/g/files/litvpz161/files/styles/block_image_16_9_lge/public/scai-k-selcuk-candan-2023-eg-1046-a.jpg?itok=04a_WW71" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">Candan receives the 2023 Daniel Jankowski Legacy Award</h3>
+          <div class="date">June 2023</div>
+          <p class="summary">K. Selçuk Candan was honored with the Daniel Jankowski Legacy Award for his sustained impact on research and education at ASU.</p>
+          <a class="source" href="https://news.asu.edu/20230613-prolific-career-earns-k-selcuk-candan-2023-jankowski-legacy-award" tabindex="-1">ASU News</a>
+        </div>
+      </article>
+
+
+        <article class="announce" role="article" aria-labelledby="a1">
+        <img src="https://sigmod.org/wp-content/uploads/2023/05/Y0-4-EGg-2.jpeg" alt="portrait">
+        <div class="meta">
+          <h3 id="a1" class="headline">Candan receives the 2023 ACM SIGMOD Contributions Award</h3>
+          <div class="date">June 2023</div>
+          <p class="summary">The SIGMOD 2023 Contributions Award goes to Professor K. Selcuk Candan for extensive and outstanding service to the database community, including long-term dedication to the SIGMOD conference coordination, instigation of rolling deadlines for the SIGMOD conference, and leadership in the conference proceedings to ACM PACMMOD journal transition.</p>
+          <a class="source" href="https://sigmod.org/k-selcuk-candan-2023-sigmod-contributions-award/" tabindex="-1">ACM SIGMOD</a>
+        </div>
+      </article>
+
+
+      <!-- duplicated items appended by JS for smooth looping (or you can add more manually) -->
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" id="prevBtn" aria-label="Show previous announcements">◀ Prev</button>
+    <button class="btn" id="playPause" aria-label="Pause auto-rotation">Pause</button>
+    <button class="btn" id="nextBtn" aria-label="Show next announcements">Next ▶</button>
+    <div style="margin-left:8px;color:#666;font-size:0.9rem;">Auto-rotate: <strong id="intervalLabel">5s</strong></div>
+  </div>
+</section>
+      
+<!--------
         <div class="hero-orbit" aria-hidden="true">
           <div class="hero-orbit-main">
             <div>
@@ -732,7 +936,11 @@
             Nature‑based water infrastructure and AI‑enabled building and district energy systems
           </div>
         </div>
-      </section>
+
+     
+------>
+
+</section>
 
       <!-- GRANTS & THEMES CALLOUTS -->
       <section class="section" id="grants">
@@ -1248,7 +1456,14 @@ footer {
   <div class="card-content"><div class="card-header"><div class="name">Pratanu Mandal</div><div class="badge">Ongoing · PhD</div></div>
   <div class="title">Pratanu's research advances causally informed data management and causal learning, particularly through developing benchmark frameworks like CausalBench that provide standardized datasets, algorithms, and metrics to evaluate causal inference methods.  His research aims to overcome limitations of traditional data management techniques by leveraging causal knowledge. His work also&nbsp; includes application of spatio-temporal deep-learning and reinforcement learning approaches to complex prediction tasks, integrating causal insights into data-driven modeling. </div>
   <a class="button" href="https://scholar.google.com/citations?user=ItnXbPoAAAAJ&hl=en">About</a>
-</div></div>			 
+</div></div>
+<div class="card">
+  <div class="card-content"><div class="card-header"><div class="name">Armin Hedzic</div><div class="badge">Ongoing · PhD</div></div>
+    <div class="title">
+Knowledge graphs are useful in many querying and knowledge management applications, and some difficult data environments have use-cases that would benefit from models that could autonomously create or modify knowledge graphs with context over multiple modalities and/or data-sets. The focus of Armin's research is to solve challenges in this space by developing novel methods to discover or manipulate knowledge graphs to improve querying and knowledge management in difficult data environments with complex multi-modal relationships.
+    </div>
+  <a class="button" href="https://dl.acm.org/doi/10.1007/978-3-031-17849-8_24">About</a>
+</div>	</div>	
 <!-- ================= MS ================= -->
 <h2>Current Master Students (MS)</h2> 	
 N/A			 
@@ -1416,6 +1631,447 @@ N/A
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Shubodeep Mitra</div><div class="badge">MS (thesis)</div></div></div> </div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Abhinav Gorantla</div><div class="badge">MS (thesis)</div></div></div> </div>
 
+<!-- ================= Undergrad ================= -->
+<h2>Past Undergraduate Students (BS)</h2>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Sahir Jahan</div>
+    <div class="badge">Research Mentee (2023)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Utkarsh Bhagat</div>
+    <div class="badge">Research Mentee (2023)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Nickolas Martinez</div>
+    <div class="badge">NSF REU (2018)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Vivan So</div>
+    <div class="badge">NSF REU (2018)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Jiayong Mo</div>
+    <div class="badge">NSF REU (2018)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">David Maitha</div>
+    <div class="badge">NSF REU (2018, 2019)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Jason Truong</div>
+    <div class="badge">NSF REU (2018)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Dalton Turner</div>
+    <div class="badge">NSF REU (2018, 2019, 2020)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Reece Bailey</div>
+    <div class="badge">NSF REU (2016–2017)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Divyanshu Khare</div>
+    <div class="badge">NSF REU (2016–2017)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Elliot Nester</div>
+    <div class="badge">NSF REU (2016–2017)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Sarah Fallah-Ad</div>
+    <div class="badge">NSF REU (2016–2017)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Sam Morton</div>
+    <div class="badge">NSF REU (2014–2016)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Anisha Gupta</div>
+    <div class="badge">NSF REU (2014–2016)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Steven Brown</div>
+    <div class="badge">Honors Contract (2013–2014)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Fatima Naveed</div>
+    <div class="badge">FSE294 (Fall 2014)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Adam Tse</div>
+    <div class="badge">MiNC (Spring 2014)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Arda Unal</div>
+    <div class="badge">FURI (Spring 2014)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Jessica Armstrong</div>
+    <div class="badge">FSE294 (Fall 2013)</div>
+  </div>
+</div></div>
+
+<!-- ================= Undergrad ================= -->
+<h2>Past High School Students </h2>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Raymond Zou</div>
+    <div class="badge">K!2 (2023)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Pravneet Chadha</div>
+    <div class="badge">K!2 (2023)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Ryan Jain</div>
+    <div class="badge">K!2 (2021–2022)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Soma Tummala</div>
+    <div class="badge">K!2 (2020–2021)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Daksh Gopalani</div>
+    <div class="badge">K!2 (2019)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Andy Wong</div>
+    <div class="badge">K!2 Human Trafficking (2018–2019)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Sanjana Sarkar</div>
+    <div class="badge">K!2 Human Trafficking (2018–2019)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Andy Wong</div>
+    <div class="badge">K!2 DataStorm (2018)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Douglas Yu</div>
+    <div class="badge">K!2 ESDMS/EpiDMS (2016)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Jerry Zhu</div>
+    <div class="badge">K!2 Energy Modeling (2015–2016)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Nancy Li</div>
+    <div class="badge">K!2 ESDMS/EpiDMS (2015–2016)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Shivam Sadakar</div>
+    <div class="badge">K!2 EpiDMS (Summer 2015)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Luke Zhang</div>
+    <div class="badge">K!2 EpiDMS (Summer 2014)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Shivam Sadakar</div>
+    <div class="badge">K!2 EpiDMS (Summer 2015)</div>
+  </div>
+</div></div>
+
+<div class="card"><div class="card-content">
+  <div class="card-header">
+    <div class="name">Fiona Zhang</div>
+    <div class="badge">K!2 EpiDMS (Spr./Summer 2014)</div>
+  </div>
+</div></div>
+
+<!-- ================= International Students ================= -->
+<h2>Past International Students </h2>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Fabrizo Antonelli</div>
+      <div class="badge">2005</div>
+    </div>
+    <div class="title">Co-Advisor. Tesi di Laurea Magistrale. Facolta di Scienze. Universita di Torino. 2005.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Eric Arnaduo</div>
+      <div class="badge">2007</div>
+    </div>
+    <div class="title">Co-Advisor. Tesi di Laurea Magistrale. Facolta di Scienze. Universita di Torino. 2007.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Luigi Di Caro</div>
+      <div class="badge">2007</div>
+    </div>
+    <div class="title">Co-Advisor. Tesi di Laurea Magistrale. Facolta di Scienze. Universita di Torino. 2007 (PhD 2011).</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Mario Cataldi</div>
+      <div class="badge">2008</div>
+    </div>
+    <div class="title">Visiting Researcher. Universita di Torino (PhD 2010).</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Marco Cagna</div>
+      <div class="badge">2009</div>
+    </div>
+    <div class="title">Co-Advisor. "Estrazione automatica di informazione dal Web: un approccio basato su pattern strutturali e visuali." Tesi di Laurea Magistrale. Facolta di Scienze. Universita di Torino. 2009.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Giacomo Cappellari</div>
+      <div class="badge">2013</div>
+    </div>
+    <div class="title">Supervisor. "Parallel Iteration Fabric: Efficient parallel skyline-window-join computation". Tesi di Laurea Magistrale. Facolta di Ingegneria. Politecnico di Torino. 2013.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Ilario Dal Grande</div>
+      <div class="badge">2016</div>
+    </div>
+    <div class="title">Co-Advisor. Tesi di Laurea Magistrale. Facolta di Scienze. Universita di Torino. 2016.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Leonardo Allisio</div>
+      <div class="badge">2015</div>
+    </div>
+    <div class="title">Co-Advisor. Tesi di Laurea Magistrale. Facolta di Scienze. Universita di Torino. 2015.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Silvestro Poccia</div>
+      <div class="badge">2017–2018</div>
+    </div>
+    <div class="title">PhD Student – Visitor (EU Marie Curie Project). Universita di Torino.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Francesco Di Mauro</div>
+      <div class="badge">2018–2021</div>
+    </div>
+    <div class="title">PhD Student. Universita di Torino.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Fabrizio Scarrone</div>
+      <div class="badge">2020–2024</div>
+    </div>
+    <div class="title">PhD Student. Universita di Torino.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Javier Redondo Anton</div>
+      <div class="badge">2022–2025</div>
+    </div>
+    <div class="title">PhD Student (EU EvoGames Plus project). Universita di Torino.</div>
+  </div>
+</div>
+
+
+<!-- ================= Postdocs and Engineers ================= -->
+<h2>Past Postdoctoral Researchers and Research Engineers </h2>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Mehmet Donderler</div>
+      <div class="badge">Post-Doc (2002–2004)</div>
+    </div>
+    <div class="title"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Qing Li</div>
+      <div class="badge">Post-Doc (2006–2008)</div>
+    </div>
+    <div class="title"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Huiping Cao</div>
+      <div class="badge">Post-Doc (2007–2009)</div>
+    </div>
+    <div class="title"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Silvestro Pocia</div>
+      <div class="badge">Research Engineer (2015–2016)</div>
+    </div>
+    <div class="title"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Kaize Ding</div>
+      <div class="badge">Post-Doc (2023)</div>
+    </div>
+    <div class="title"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Bilgehan Arslan</div>
+      <div class="badge">Post-Doc (2021–2023)</div>
+    </div>
+    <div class="title"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="name">Yoonhyuk Choi</div>
+      <div class="badge">Post-Doc (2023–2024)</div>
+    </div>
+    <div class="title"></div>
+  </div>
+</div>
+
 
 
 </div>
@@ -1441,5 +2097,170 @@ N/A
       </div>
     </footer>
   </div>
+
+
+
+<script>
+(function(){
+  const viewport = document.getElementById('newsViewport');
+  const track = document.getElementById('newsTrack');
+  const items = Array.from(track.children);
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const playPauseBtn = document.getElementById('playPause');
+
+  let visibleCount = window.matchMedia('(min-width:640px)').matches ? 3 : 1;
+  let itemHeights = []; // will store computed heights
+  let index = 0; // index of first visible item
+  let intervalMs = 5000;
+  let timer = null;
+  let isPlaying = true;
+
+  // Clone first `visibleCount` items to the end to allow smooth loop
+  function ensureClones() {
+    // remove existing clones if any
+    track.querySelectorAll('[data-clone="true"]').forEach(n => n.remove());
+    const clones = items.slice(0, visibleCount).map(el => {
+      const c = el.cloneNode(true);
+      c.dataset.clone = "true";
+      return c;
+    });
+    clones.forEach(c => track.appendChild(c));
+  }
+
+  // Compute per-item height (including margins/borders)
+  function computeHeights() {
+    const children = Array.from(track.children);
+    itemHeights = children.map(child => {
+      const style = window.getComputedStyle(child);
+      const marginTop = parseFloat(style.marginTop) || 0;
+      const marginBottom = parseFloat(style.marginBottom) || 0;
+      return Math.round(child.getBoundingClientRect().height + marginTop + marginBottom);
+    });
+  }
+
+  // Set viewport exact height to show `visibleCount` items
+  function setViewportHeight() {
+    computeHeights();
+    // sum first visibleCount heights
+    const total = itemHeights.slice(0, visibleCount).reduce((a,b) => a+b, 0);
+    viewport.style.height = total + 'px';
+  }
+
+  // Move to index (smooth)
+  function moveTo(i, withTransition = true) {
+    const children = Array.from(track.children);
+    // compute translateY by summing heights up to i
+    const offset = itemHeights.slice(0, i).reduce((a,b)=>a+b, 0);
+    if (!withTransition) {
+      track.style.transition = 'none';
+    } else {
+      track.style.transition = 'transform 600ms cubic-bezier(.2,.9,.3,1)';
+    }
+    track.style.transform = `translateY(-${offset}px)`;
+  }
+
+  // Advance by visibleCount
+  function advance(forward = true) {
+    const childrenCount = track.children.length;
+    const step = visibleCount;
+    if (forward) index += step;
+    else index -= step;
+
+    // Normal case: within range (there are clones at end)
+    moveTo(index, true);
+
+    // If we've reached the clones at the end, jump back to start after animation
+    const originalCount = items.length;
+    if (index >= originalCount) {
+      // wait for transition to finish then reset without animation
+      setTimeout(() => {
+        index = 0;
+        moveTo(index, false);
+        // force reflow to ensure next transitions are applied
+        void track.offsetWidth;
+        track.style.transition = '';
+      }, 620);
+    }
+
+    // If index becomes negative (user pressed Prev from start), jump to last block
+    if (index < 0) {
+      // set index to last original block
+      index = Math.max(0, Math.floor((items.length - 1) / visibleCount) * visibleCount);
+      // move instantly to the cloned area that corresponds (we need clones at front for perfect reverse loop — keep simple: animate to that index)
+      moveTo(index, false);
+      void track.offsetWidth;
+      track.style.transition = '';
+    }
+  }
+
+  function startTimer() {
+    stopTimer();
+    timer = setInterval(() => advance(true), intervalMs);
+    isPlaying = true;
+    playPauseBtn.textContent = 'Pause';
+    playPauseBtn.setAttribute('aria-label','Pause auto-rotation');
+  }
+
+  function stopTimer() {
+    if (timer) { clearInterval(timer); timer = null; }
+    isPlaying = false;
+    playPauseBtn.textContent = 'Play';
+    playPauseBtn.setAttribute('aria-label','Resume auto-rotation');
+  }
+
+  // Recalculate on resize (and handle responsive visibleCount)
+  function onResize() {
+    const newVisible = window.matchMedia('(min-width:640px)').matches ? 2 : 1;
+    if (newVisible !== visibleCount) {
+      visibleCount = newVisible;
+      // rebuild clones and reset index
+      ensureClones();
+      computeHeights();
+      index = 0;
+    }
+    setViewportHeight();
+    moveTo(index, false);
+  }
+
+  // Init
+  function init() {
+    ensureClones();
+    // recompute items array to include clones for height calc
+    computeHeights();
+    setViewportHeight();
+    moveTo(0, false);
+    startTimer();
+
+    // Pause on hover/focus
+    viewport.addEventListener('mouseenter', stopTimer);
+    viewport.addEventListener('mouseleave', () => { if (!isPlaying) startTimer(); });
+    viewport.addEventListener('focusin', stopTimer);
+    viewport.addEventListener('focusout', () => { if (!isPlaying) startTimer(); });
+
+    // Buttons
+    prevBtn.addEventListener('click', () => { stopTimer(); advance(false); });
+    nextBtn.addEventListener('click', () => { stopTimer(); advance(true); });
+    playPauseBtn.addEventListener('click', () => {
+      if (timer) stopTimer(); else startTimer();
+    });
+
+    // Window resize
+    window.addEventListener('resize', () => {
+      // debounce
+      clearTimeout(window._newsResizeTimer);
+      window._newsResizeTimer = setTimeout(onResize, 120);
+    });
+  }
+
+  // Kick off
+  init();
+
+  // Expose for debugging if needed
+  window.__newsCarousel = { startTimer, stopTimer, advance };
+})();
+</script>
+
+  
 </body>
 </html>
