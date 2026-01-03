@@ -2568,24 +2568,30 @@ N/A
     const BIBTEX_PATH = './assets/publications.bib';
 
     /* ---------- BibTeX parser ---------- */
-    function parseBibTeX(text) {
-      const entries = [];
-      const blocks = text.split('@').slice(1);
+function parseBibTeX(text) {
+  const entries = [];
+  const blocks = text.split('@').slice(1);
 
-      for (const block of blocks) {
-        const body = block.slice(block.indexOf('{') + 1);
-        const fields = {};
+  for (const block of blocks) {
+    const bodyStart = block.indexOf('{');
+    if (bodyStart === -1) continue;
 
-        body.replace(/(\\w+)\\s*=\\s*[{\"]([^}\"]+)[}\"]/g,
-          (_, key, value) => {
-            fields[key.toLowerCase()] = value.trim();
-          }
-        );
+    const body = block.slice(bodyStart + 1);
+    const fields = {};
 
-        entries.push(fields);
+    body.replace(/(\w+)\s*=\s*[{\"]([^}\"]+)[}\"]/g,
+      (_, key, value) => {
+        fields[key.toLowerCase()] = value.trim();
       }
-      return entries;
+    );
+
+    // only push entries that actually have a title
+    if (fields.title) {
+      entries.push(fields);
     }
+  }
+  return entries;
+}
 
     /* ---------- Render cards ---------- */
     function render(entries) {
