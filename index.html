@@ -2468,6 +2468,185 @@ N/A
 
 </section>
 
+<section id="bibtex-publications-asu">
+
+  <style>
+    /* ===== Scoped variables (copied from your design) ===== */
+    #bibtex-publications-asu {
+      --asu-maroon: #7b1420;
+      --border: #e2e4e7;
+      --bg-soft: #f6f7f8;
+      --link: #0a58ca;
+
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, Arial;
+      background: #ffffff;
+      color: #222;
+      margin-top: 48px;
+    }
+
+    #bibtex-publications-asu .container {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    #bibtex-publications-asu .section h2 {
+      color: var(--asu-maroon);
+      border-bottom: 3px solid var(--asu-maroon);
+      padding-bottom: 6px;
+      margin-bottom: 16px;
+    }
+
+    #bibtex-publications-asu .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 16px;
+      background: #fff;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    #bibtex-publications-asu .card-content {
+      flex: 1;
+    }
+
+    #bibtex-publications-asu .card-header {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    #bibtex-publications-asu .name {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    #bibtex-publications-asu .badge {
+      background: var(--bg-soft);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.8rem;
+      color: #444;
+    }
+
+    #bibtex-publications-asu .title {
+      font-style: italic;
+      margin: 6px 0 10px;
+    }
+
+    #bibtex-publications-asu a.button {
+      display: inline-block;
+      margin-left: auto;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: var(--asu-maroon);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+    }
+
+    #bibtex-publications-asu a.button:hover {
+      background: #6a1531;
+    }
+  </style>
+
+  <div class="container section">
+    <h2>Publications</h2>
+    <div class="pub-list"></div>
+  </div>
+
+  <script>
+  (function () {
+    const ROOT = document.getElementById('bibtex-publications-asu');
+    const LIST = ROOT.querySelector('.pub-list');
+    const BIBTEX_PATH = './assets/publications.bib';
+
+    /* ---------- BibTeX parser ---------- */
+    function parseBibTeX(text) {
+      const entries = [];
+      const blocks = text.split('@').slice(1);
+
+      for (const block of blocks) {
+        const body = block.slice(block.indexOf('{') + 1);
+        const fields = {};
+
+        body.replace(/(\\w+)\\s*=\\s*[{\"]([^}\"]+)[}\"]/g,
+          (_, key, value) => {
+            fields[key.toLowerCase()] = value.trim();
+          }
+        );
+
+        entries.push(fields);
+      }
+      return entries;
+    }
+
+    /* ---------- Render cards ---------- */
+    function render(entries) {
+      // sort newest first
+      entries.sort((a, b) => (b.year || 0) - (a.year || 0));
+
+      for (const e of entries) {
+        const authors = (e.author || '')
+          .split(' and ')
+          .map(a => a.trim())
+          .join(', ');
+
+        const venue = e.booktitle || e.journal || '';
+        const year = e.year || '';
+
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <div class="card-content">
+            <div class="card-header">
+              <div class="name">${authors}</div>
+              ${year ? `<span class="badge">${year}</span>` : ''}
+              ${venue ? `<span class="badge">${venue}</span>` : ''}
+              ${e.url ? `<a class="button" href="${e.url}" target="_blank">View</a>` : ''}
+            </div>
+            <div class="title">${e.title || ''}</div>
+          </div>
+        `;
+
+        LIST.appendChild(card);
+      }
+    }
+
+    /* ---------- Load BibTeX ---------- */
+    async function loadBibTeX() {
+      try {
+        const res = await fetch(BIBTEX_PATH);
+        if (!res.ok) throw new Error('BibTeX not found');
+        const text = await res.text();
+        const entries = parseBibTeX(text);
+
+        if (!entries.length) {
+          LIST.textContent = 'No publications found.';
+          return;
+        }
+
+        render(entries);
+      } catch (err) {
+        console.error(err);
+        LIST.textContent = 'Failed to load publications.';
+      }
+    }
+
+    loadBibTeX();
+  })();
+  </script>
+
+</section>
+
+		
       
     </main>
 
