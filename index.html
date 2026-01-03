@@ -262,7 +262,7 @@
     .section {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 2.5rem 1.25rem;
+      padding: 1rem 0.5rem;
     }
 
     /* HERO */
@@ -486,7 +486,7 @@
     /* SECTION HEADERS */
 
     .section-header {
-      margin-bottom: 1.75rem;
+      margin-bottom: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -511,7 +511,7 @@
     .section-subtitle {
       font-size: 0.9rem;
       color: var(--text-muted);
-      max-width: 32rem;
+      max-width: 64rem;
     }
 
     /* GRANTS GRID */
@@ -597,6 +597,15 @@
       font-size: 0.84rem;
       color: var(--text-muted);
       line-height: 1.6;
+    }
+
+    .grant-body a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .grant-body a:hover {
+      text-decoration: underline;
     }
 
     .grant-footer {
@@ -740,7 +749,8 @@
   .headline { font-weight:700; margin:0 0 6px; font-size:1.02rem; }
   .date { color:#666; font-size:0.9rem; margin-bottom:8px; }
   .summary { margin:0 0 8px; line-height:1.4; color:#222; }
-  .source { font-size:0.88rem; color:#0b63c6; text-decoration:none; }
+  .source { font-size:0.88rem; color:var(--accent); text-decoration:none; }
+  .source:hover { text-decoration:underline; }
 
   /* Layout: show 3 announcements at a time on screens >=640px, otherwise 1 */
   @media (min-width: 640px){
@@ -877,7 +887,8 @@
       padding: 16px;
       border-radius: 10px;
       border: 1px solid darkred;
-      max-width: 100%;
+      max-width: 90%;
+      margin: 0 auto;
     }
 
     #dblp-newsreel-widget * {
@@ -1136,7 +1147,7 @@
       <!-- Announcement items -->
 
         <article class="announce" role="article" aria-labelledby="a1">
-        <img src="/images/emitlab2.jpg" alt="portrait">
+        <img src="/images/emitlab2_small.jpg" alt="portrait">
         <div class="meta">
           <h3 id="a1" class="headline">Javier Redondo Anton defends his PhD thesis
 	   </h3>
@@ -1152,7 +1163,7 @@ Contexts, and for Knowledge Discovery with Limited Simulation Budgets
 
       
         <article class="announce" role="article" aria-labelledby="a1">
-        <img src="/images/emitlab2.jpg" alt="portrait">
+        <img src="/images/emitlab2_small.jpg" alt="portrait">
         <div class="meta">
           <h3 id="a1" class="headline">Abhinav Gorantla defends his MS thesis
 	   </h3>
@@ -1165,7 +1176,7 @@ Contexts, and for Knowledge Discovery with Limited Simulation Budgets
 
 
         <article class="announce" role="article" aria-labelledby="a1">
-        <img src="/images/emitlab2.jpg" alt="portrait">
+        <img src="/images/emitlab2_small.jpg" alt="portrait">
         <div class="meta">
           <h3 id="a1" class="headline">Fahim Tasneema Azad defends her PhD thesis proposal
 	   </h3>
@@ -1662,7 +1673,7 @@ h1 {
   color: var(--asu-maroon);
   border-bottom: 3px solid var(--asu-maroon);
   padding-bottom: 6px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .card {
@@ -1717,14 +1728,16 @@ a.button {
   display: inline-block;
   padding: 6px 12px;
   border-radius: 6px;
-  background: var(--link);
+  background: var(--asu-maroon);
   color: #fff;
   font-size: 0.85rem;
+  font-weight: bold;
   text-decoration: none;
+  transition: background-color 0.2s ease;
 }
 
 a.button:hover {
-  background: #084298;
+  background: #6a1531;
 }
 
 footer {
@@ -1766,7 +1779,7 @@ footer {
 		  
 <div class="section-header">
     <div>
-    <h2 class="section-title">Post-Doctoral Researcher</h2>
+    <h2 class="section-title">Post-Doctoral Researchers</h2>
     </div>
     <p class="section-subtitle">     
     </p>
@@ -1789,7 +1802,7 @@ footer {
 		  
 		 <div class="section">
 <!-- ================= PhD ================= -->
-<h2>Current Doctoral Students (PhD)</h2> 
+<h2>Doctoral Students (PhD)</h2> 
 
 <div class="card">
   <div class="card-content"><div class="card-header"><div class="name">Fahim Tasneema Azad</div><div class="badge">Ongoing · PhD</div></div>
@@ -1807,8 +1820,8 @@ footer {
   <a class="button" href="https://abhinavgorantla.me">About</a>
 </div></div>			 
 <div class="card">
-  <img src="/images/kapkic.jpeg" alt="Ahmet Kapkic" class="card-photo">
-  <div class="card-content"><div class="card-header"><div class="name">Ahmet Kapkic</div><div class="badge">Ongoing · PhD</div></div>
+  <img src="/images/kapkic.jpeg" alt="Ahmet Kapkiç" class="card-photo">
+  <div class="card-content"><div class="card-header"><div class="name">Ahmet Kapkiç</div><div class="badge">Ongoing · PhD</div></div>
   <div class="title">In addition to his contributions to CausalBench, Ahmet's work within the context of the PIRE project integrates causally informed methods into broader systems research, emphasizing causal discovery from complex, observational data. He is developing approaches that leverage causally-informed Petri nets to enable process discovery from time-series and system logs, blending formal process modeling with causal reasoning to better understand dynamic system behavior. </div>
   <a class="button" href="kapkic.github.io">About</a>
 </div>	</div>		
@@ -1825,18 +1838,18 @@ Knowledge graphs are useful in many querying and knowledge management applicatio
   <a class="button" href="https://dl.acm.org/doi/10.1007/978-3-031-17849-8_24">About</a>
 </div>	</div>	
 <!-- ================= MS ================= -->
-<h2>Current Master Students (MS)</h2> 	
+<h2>Master Students (MS)</h2> 	
 N/A			 
 			 
 <!-- ================= Undergrad ================= -->
-<h2>Current Undergraduate Students (BS)</h2> 	
+<h2>Undergraduate Students (BS)</h2> 	
 <div class="card"><div class="card-content">
 <div class="card-header"><div class="name">Sanskar Srivastava</div><div class="badge">Ongoing · BS</div></div>
 <a class="button" href="https://www.linkedin.com/in/sanskarsri26">About</a>	
 </div></div>
 			 
 <!-- ================= High School ================= -->
-<h2>Current High School Students</h2> 	
+<h2>High School Students</h2> 	
 <div class="card"><div class="card-content">
 <div class="card-header">
   <div class="name">Kanav Agarwal</div><div class="badge">Ongoing · K12</div></div>
@@ -1858,12 +1871,12 @@ N/A
 
 <div class="section">
 <!-- ================= PhD ================= -->
-<h2>Past Doctoral Students (PhD)</h2>
+<h2>Doctoral Students (PhD)</h2>
 
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Christopher Mayer</div><div class="badge">2005 · PhD</div></div><div class="title">Quality-based Replication of Freshness-Differentiated Web Applications</div></div></div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Ping Lin</div><div class="badge">2006 · PhD</div></div><div class="title">PXStore: A Content- and Access- Privacy Preserving XML Data Store</div></div></div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Lina Peng</div><div class="badge">2008 · PhD</div></div><div class="title">Quality-Adaptive Execution and Optimization of Media Processing Workflows</div></div></div>
-<div class="card"><div class="card-content"><div class="card-header"><div class="name">Gisik Kown</div><div class="badge">2008 · PhD</div></div><div class="title">Decentralized Resource Location and Multimedia Service Execution</div></div></div>
+<div class="card"><div class="card-content"><div class="card-header"><div class="name">Gisik Kwon</div><div class="badge">2008 · PhD</div></div><div class="title">Decentralized Resource Location and Multimedia Service Execution</div></div></div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Shibo Wu</div><div class="badge">2008 · PhD</div></div><div class="title">Power-Efficient Geographic Routing in Sensor Networks</div></div></div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Jong Wook Kim</div><div class="badge">2009 · PhD</div></div><div class="title">Exploiting Structured Knowledge for Segmentation, Enrichment, and Summarization of Data</div></div></div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Yan Qi</div><div class="badge">2009 · PhD</div></div><div class="title">System Support for Exploration and Expert Feedback in Resolving Conflicts</div></div></div>
@@ -1907,7 +1920,7 @@ N/A
 </div>  
 <!-- ================= MS / McS ================= -->
 <div class="section">
-<h2>Past Master’s Students (MS / McS)</h2>
+<h2>Master’s Students (MS / McS)</h2>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Lakshmi Priya Mahalingam</div><div class="badge">MS</div></div><div class="title">Query Optimization in Multimedia Databases</div></div></div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Amit Jindal</div><div class="badge">MS</div></div><div class="title">Quorums-Replication of Data in Distributed Systems</div></div> </div>
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Prakash Yamuna</div><div class="badge">MS</div></div><div class="title">Similarity based Retrieval and Indexing of Temporal Structures</div></div> </div>
@@ -1992,7 +2005,7 @@ N/A
 <div class="card"><div class="card-content"><div class="card-header"><div class="name">Abhinav Gorantla</div><div class="badge">MS (thesis)</div></div></div> </div>
 
 <!-- ================= Undergrad ================= -->
-<h2>Past Undergraduate Students (BS)</h2>
+<h2>Undergraduate Students (BS)</h2>
 
 <div class="card"><div class="card-content">
   <div class="card-header">
@@ -2128,7 +2141,7 @@ N/A
 </div></div>
 
 <!-- ================= Undergrad ================= -->
-<h2>Past High School Students </h2>
+<h2>High School Students </h2>
 
 <div class="card"><div class="card-content">
   <div class="card-header">
@@ -2236,7 +2249,7 @@ N/A
 </div></div>
 
 <!-- ================= International Students ================= -->
-<h2>Past International Students </h2>
+<h2>International Students </h2>
 
 <div class="card">
   <div class="card-content">
@@ -2360,7 +2373,7 @@ N/A
 
 
 <!-- ================= Postdocs and Engineers ================= -->
-<h2>Past Postdoctoral Researchers and Research Engineers </h2>
+<h2>Postdoctoral Researchers and Research Engineers </h2>
 
 <div class="card">
   <div class="card-content">
