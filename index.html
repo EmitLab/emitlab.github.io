@@ -2568,26 +2568,93 @@ N/A
     const LIST = ROOT.querySelector('.pub-list');
     const BIBTEX_PATH = './assets/publications.bib';
 
-    /* ---------- BibTeX parser ---------- */
-    function parseBibTeX(text) {
-      const entries = [];
-      const blocks = text.split('@').slice(1);
+	 /* ------Correct Turkish characters and parse bibtex------ */ 
 
-      for (const block of blocks) {
-        const body = block.slice(block.indexOf('{') + 1);
-        const fields = {};
+// normalize LaTeX accent sequences (Turkish-aware) and variants like {\c{c}}, {\c c}, \c{c}, \c c
+function normalizeLatex(text) {
+  if (!text) return text;
 
-        body.replace(/(\\w+)\\s*=\\s*[{\"]([^}\"]+)[}\"]/g,
-          (_, key, value) => {
-            fields[key.toLowerCase()] = value.trim();
-          }
-        );
+  // Normalize Turkish LaTeX accents (handles {\c{c}}, \c{c}, {\c c}, etc.)
+  const replacements = [
+    [/\{?\\c\s*\{?\s*c\s*\}?\}?/gi, 'ç'],
+    [/\{?\\c\s*\{?\s*C\s*\}?\}?/g,  'Ç'],
 
-        entries.push(fields);
+    [/\{?\\u\s*\{?\s*g\s*\}?\}?/gi, 'ğ'],
+    [/\{?\\u\s*\{?\s*G\s*\}?\}?/g,  'Ğ'],
+
+    [/\{?\\\"\s*\{?\s*o\s*\}?\}?/gi, 'ö'],
+    [/\{?\\\"\s*\{?\s*O\s*\}?\}?/g,  'Ö'],
+
+    [/\{?\\\"\s*\{?\s*u\s*\}?\}?/gi, 'ü'],
+    [/\{?\\\"\s*\{?\s*U\s*\}?\}?/g,  'Ü'],
+
+    [/\{?\\c\s*\{?\s*s\s*\}?\}?/gi, 'ş'],
+    [/\{?\\c\s*\{?\s*S\s*\}?\}?/g,  'Ş'],
+
+    [/\{?\\i\s*\}?/g, 'ı'],
+    [/\{?\\\.\s*\{?\s*I\s*\}?\}?/g, 'İ']
+  ];
+
+  for (const [re, val] of replacements) {
+    text = text.replace(re, val);
+  }
+
+  // Remove leftover braces that wrap single characters
+  text = text.replace(/\{([A-Za-zÇçĞğİıÖöŞşÜü])\}/g, '$1');
+
+  // Remove remaining LaTeX escapes for punctuation
+  text = text.replace(/\\([%&_$#])/g, '$1');
+
+  return text;
+}
+
+
+// Revised parseBibTeX that calls normalizer before parsing
+function parseBibTeX(text) {
+  if (!text) return [];
+
+  // 1. Normalize LaTeX FIRST
+  text = normalizeLatex(text);
+
+  const entries = [];
+  const blocks = text.split('@').slice(1);
+
+  for (const block of blocks) {
+    const start = block.indexOf('{');
+    if (start === -1) continue;
+
+    const body = block.slice(start + 1);
+    const fields = {};
+
+    // 2. Extract key = value pairs WITHOUT assuming balanced braces
+    body.replace(
+      /(\w+)\s*=\s*(\{(?:[^{}]|\{[^{}]*\})*\}|"(?:[^"]*)"|[^,]+)\s*,?/g,
+      (_, key, raw) => {
+        let value = raw.trim();
+
+        // strip surrounding braces or quotes
+        if (
+          (value.startsWith('{') && value.endsWith('}')) ||
+          (value.startsWith('"') && value.endsWith('"'))
+        ) {
+          value = value.slice(1, -1);
+        }
+
+        fields[key.toLowerCase()] = value.trim();
       }
-      return entries;
-    }
+    );
 
+    // Only drop entry if truly empty
+    if (Object.keys(fields).length > 0) {
+      entries.push(fields);
+    }
+  }
+
+  return entries;
+}
+
+
+	  
     /* ---------- Render cards ---------- */
     function render(entries) {
       // sort newest first
