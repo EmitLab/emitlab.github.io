@@ -2568,8 +2568,30 @@ N/A
     const LIST = ROOT.querySelector('.pub-list');
     const BIBTEX_PATH = './assets/publications.bib';
 
+
+	 /* Correct Turkish characters*/ 
+function normalizeLatexTurkish(text) {
+  const map = {
+    "{\\c c}": "ç", "{\\c C}": "Ç",
+    "{\\u g}": "ğ", "{\\u G}": "Ğ",
+    "{\\i}": "ı",
+    "{\\.I}": "İ",
+    "{\\\"o}": "ö", "{\\\"O}": "Ö",
+    "{\\c s}": "ş", "{\\c S}": "Ş",
+    "{\\\"u}": "ü", "{\\\"U}": "Ü"
+  };
+
+  for (const latex in map) {
+    text = text.split(latex).join(map[latex]);
+  }
+
+  return text;
+}
+
     /* ---------- BibTeX parser ---------- */
 function parseBibTeX(text) {
+  text = normalizeLatexTurkish(text);   
+
   const entries = [];
   const blocks = text.split('@').slice(1);
 
@@ -2586,10 +2608,7 @@ function parseBibTeX(text) {
       }
     );
 
-    // only push entries that actually have a title
-    if (fields.title) {
-      entries.push(fields);
-    }
+    if (fields.title) entries.push(fields);
   }
   return entries;
 }
