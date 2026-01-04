@@ -2522,7 +2522,7 @@ N/A
       margin-bottom: 6px;
     }
 
-    #bibtex-publications-asu .name {
+    #bibtex-publications-asu .title {
       font-weight: 600;
       font-size: 1.05rem;
     }
@@ -2535,13 +2535,14 @@ N/A
       color: #444;
     }
 
-    #bibtex-publications-asu .title {
+    #bibtex-publications-asu .name {
       font-style: italic;
       margin: 6px 0 10px;
     }
 
 	 #bibtex-publications-asu .doi {
 	  color: #8C1D40; 
+	  margin-top: 6px;	 
     }  
 	  
     #bibtex-publications-asu a.button {
@@ -2680,11 +2681,11 @@ function parseBibTeX(text) {
         card.innerHTML = `
           <div class="card-content">
             <div class="card-header">
-              <div class="name">${e.title || ''}</div>
+              <div class="title">${e.title || ''}</div>
               ${year ? `<span class="badge">${year}</span>` : ''}
               ${e.url ? `<a class="button" href="${e.url}" target="_blank">View</a>` : ''}
             </div>
-			<div class="title">${authors}</div>
+			<div class="name">${authors}</div>
 			<div> ${venue ? `${venue}` : ''}</div>
 			<div> ${e.doi ? `<a class="doi" href="https://doi.org/${e.doi}">DOI: https://doi.org/${e.doi}</a>` : ''}</div>
           </div>
