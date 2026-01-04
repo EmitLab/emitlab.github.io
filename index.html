@@ -2664,7 +2664,7 @@ function parseBibTeX(text) {
         const authors = (e.author || '')
           .split(' and ')
           .map(a => a.trim())
-          .join(', ');
+          .join('; ');
 
         const venue = e.booktitle || e.journal || '';
         const year = e.year || '';
