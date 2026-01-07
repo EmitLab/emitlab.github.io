@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EMITLab</title>
@@ -1742,8 +1744,12 @@ h1 {
   margin-bottom: 6px;
 }
 
+.card-header .name {
+  flex: 1;
+}
+
 .card-header .button {
-  margin-left: auto;
+  margin-left: 0;
 }
 
 .name {
@@ -2522,6 +2528,14 @@ N/A
       margin-bottom: 6px;
     }
 
+    #bibtex-publications-asu .card-header .name {
+      flex: 1;
+    }
+
+    #bibtex-publications-asu .card-header .button {
+      margin-left: 0;
+    }
+
     #bibtex-publications-asu .name {
       font-weight: 600;
       font-size: 1.05rem;
@@ -2537,7 +2551,40 @@ N/A
 
     #bibtex-publications-asu .title {
       font-style: italic;
-      margin: 6px 0 10px;
+    }
+
+    #bibtex-publications-asu .field-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    #bibtex-publications-asu .field-row:last-child {
+      margin-bottom: 0;
+    }
+
+    #bibtex-publications-asu .icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      color: var(--asu-maroon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    #bibtex-publications-asu .icon svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+      display: block;
+    }
+
+    #bibtex-publications-asu .field-content {
+      flex: 1;
     }
 
 	 #bibtex-publications-asu .doi {
@@ -2563,7 +2610,7 @@ N/A
   </style>
 
   <div class="container section">
-    <h2>Publications (12/25 - from Semantic Scholar)</h2>
+    <h2>Publications (01/26 - from Semantic Scholar)</h2>
     <div class="pub-list"></div>
   </div>
 
@@ -2662,8 +2709,18 @@ function parseBibTeX(text) {
 	  
     /* ---------- Render cards ---------- */
     function render(entries) {
-      // sort newest first
-      entries.sort((a, b) => (b.year || 0) - (a.year || 0));
+      // sort newest first, then alphabetically by title if years are the same
+      entries.sort((a, b) => {
+        const yearA = parseInt(a.year || 0);
+        const yearB = parseInt(b.year || 0);
+        if (yearB !== yearA) {
+          return yearB - yearA; // newest first
+        }
+        // If years are the same, sort alphabetically by title
+        const titleA = (a.title || '').toLowerCase();
+        const titleB = (b.title || '').toLowerCase();
+        return titleA.localeCompare(titleB);
+      });
 
       for (const e of entries) {
         const authors = (e.author || '')
@@ -2681,12 +2738,11 @@ function parseBibTeX(text) {
           <div class="card-content">
             <div class="card-header">
               <div class="name">${e.title || ''}</div>
-              ${year ? `<span class="badge">${year}</span>` : ''}
-              ${e.url ? `<a class="button" href="${e.url}" target="_blank">View</a>` : ''}
+              ${e.url ? (year ? `<span class="badge">${year}</span><a class="button" href="${e.url}" target="_blank">View</a>` : `<a class="button" href="${e.url}" target="_blank">View</a>`) : year ? `<span class="badge">${year}</span>` : ''}
             </div>
-			<div class="title">${authors}</div>
-			<div style="margin-bottom: 8px;"> ${venue ? `${venue}` : ''}</div>
-			<div> ${e.doi ? `<a class="doi" href="https://doi.org/${e.doi}">https://doi.org/${e.doi}</a>` : ''}</div>
+            <div class="title">${authors}</div>
+            <div style="margin-bottom: 8px;">${venue ? `${venue}` : ''}</div>
+            <div>${e.doi ? `<a class="doi" href="https://doi.org/${e.doi}">https://doi.org/${e.doi}</a>` : ''}</div>
           </div>
         `;
 
